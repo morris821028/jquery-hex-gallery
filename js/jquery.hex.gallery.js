@@ -1,29 +1,57 @@
 $(document).ready(function() {
-	$("script[type='text/hex-gallery']").each(function(index, value) {
-		if (index == 0) {
-			console.log("WTF");
-			$('head').append(
-				'<style type="text/css">' + '.hex-container{width:700px;height:100%;display:inline-block}.hex{width:150px;height:86px;background-color:#ccc;background-repeat:no-repeat;background-position:50% 50%;-webkit-background-size:cover;-moz-background-size:cover;background-size:cover;position:relative;float:left;margin:25px 5px;text-align:center;zoom:1;-webkit-animation:animatedBackground 10s linear infinite;-moz-animation:animatedBackground 10s linear infinite;-ms-animation:animatedBackground 10s linear infinite;animation:animatedBackground 10s linear infinite;}.hex.hex-gap{margin-left:86px}.hex a{display:block;width:100%;height:100%;text-indent:-9999em;position:absolute;top:0;left:0}.hex .corner-1{-webkit-transform:rotate(60deg);-moz-transform:rotate(60deg);-ms-transform:rotate(60deg);-o-transform:rotate(60deg);-webkit-transform:rotate(60deg);-moz-transform:rotate(60deg);-ms-transform:rotate(60deg);transform:rotate(60deg);}.hex .corner-1:before{-webkit-transform:rotate(-60deg) translate(-87px,0);-moz-transform:rotate(-60deg) translate(-87px,0);-ms-transform:rotate(-60deg) translate(-87px,0);-o-transform:rotate(-60deg) translate(-87px,0);-webkit-transform:rotate(-60deg) translate(-87px,0);-moz-transform:rotate(-60deg) translate(-87px,0);-ms-transform:rotate(-60deg) translate(-87px,0);transform:rotate(-60deg) translate(-87px,0);-webkit-transform-origin:0 0;-moz-transform-origin:0 0;-ms-transform-origin:0 0;-o-transform-origin:0 0;-webkit-transform-origin:0 0;-moz-transform-origin:0 0;-ms-transform-origin:0 0;transform-origin:0 0}.hex .corner-2{-webkit-transform:rotate(-60deg);-moz-transform:rotate(-60deg);-ms-transform:rotate(-60deg);-o-transform:rotate(-60deg);-webkit-transform:rotate(-60deg);-moz-transform:rotate(-60deg);-ms-transform:rotate(-60deg);transform:rotate(-60deg);}.hex .corner-2:before{-webkit-transform:rotate(60deg) translate(-44px,-12px);-moz-transform:rotate(60deg) translate(-44px,-12px);-ms-transform:rotate(60deg) translate(-44px,-12px);-o-transform:rotate(60deg) translate(-44px,-12px);-webkit-transform:rotate(60deg) translate(-44px,-12px);-moz-transform:rotate(60deg) translate(-44px,-12px);-ms-transform:rotate(60deg) translate(-44px,-12px);transform:rotate(60deg) translate(-44px,-12px);bottom:0}.hex .corner-3{-webkit-transform:rotate(0);-moz-transform:rotate(0);-ms-transform:rotate(0);-o-transform:rotate(0);-webkit-transform:rotate(0);-moz-transform:rotate(0);-ms-transform:rotate(0);transform:rotate(0);}.hex .corner-3:before{-webkit-transform:rotate(0) translate(-12px,-44px);-moz-transform:rotate(0) translate(-12px,-44px);-ms-transform:rotate(0) translate(-12px,-44px);-o-transform:rotate(0) translate(-12px,-44px);-webkit-transform:rotate(0) translate(-12px,-44px);-moz-transform:rotate(0) translate(-12px,-44px);-ms-transform:rotate(0) translate(-12px,-44px);transform:rotate(0) translate(-12px,-44px);bottom}.hex .inner{width: 150px;height: 86px;color:#eee;position:absolute;top:0;right:0;}.hex .inner a{text-indent:0;color:#fff}.hex h4{font-family:"Josefin Sans",sans-serif;margin:0}.hex hr{border:0;border-top:1px solid #eee;width:60%;margin:15px auto}.hex p{font-size:16px;font-family:"Source Code Pro",Consolas,Monaco,Menlo,Consolas,monospace;width:80%;margin:0 auto}.hex.hex-1{background:#74cddb}.hex.hex-2{background:#f5c53c}.hex.hex-3{background:#80b971}.hex .corner-1,.hex .corner-2,.hex .corner-3{position:absolute;top:0;left:0;width:100%;height:100%;background:inherit;overflow:hidden;-webkit-backface-visibility:hidden;-moz-backface-visibility:hidden;-ms-backface-visibility:hidden;-o-backface-visibility:hidden;-webkit-backface-visibility:hidden;-moz-backface-visibility:hidden;-ms-backface-visibility:hidden;backface-visibility:hidden}.hex .corner-1:before,.hex .corner-2:before,.hex .corner-3:before{width:173px;height:173px;content:"";position:absolute;top:0;left:0;background:inherit;background-repeat:no-repeat;-webkit-backface-visibility:hidden;-moz-backface-visibility:hidden;-ms-backface-visibility:hidden;-o-backface-visibility:hidden;-webkit-backface-visibility:hidden;-moz-backface-visibility:hidden;-ms-backface-visibility:hidden;backface-visibility:hidden}.hex-caption{background-color:rgba(0,0,0,0.5);position:absolute;color:#fff;-webkit-transition:all 300ms ease-out;-moz-transition:all 300ms ease-out;-o-transition:all 300ms ease-out;-ms-transition:all 300ms ease-out;-webkit-transition:all 300ms ease-out;-moz-transition:all 300ms ease-out;-ms-transition:all 300ms ease-out;transition:all 300ms ease-out;left:0}.hex:hover .hex-simple-caption{-moz-transform:translateY(-100%);-o-transform:translateY(-100%);-webkit-transform:translateY(-100%);-webkit-transform:translateY(-100%);-moz-transform:translateY(-100%);-ms-transform:translateY(-100%);transform:translateY(-100%);visibility:visible}.hex-simple-caption{height:30px;width:100%;display:block;bottom:-30px;line-height:25pt;text-align:center;visibility:hidden}@-moz-keyframes animatedBackground{from{background-position:0 0}to{background-position:100% 0}}@-webkit-keyframes animatedBackground{from{background-position:0 0}to{background-position:100% 0}}@-o-keyframes animatedBackground{from{background-position:0 0}to{background-position:100% 0}}@keyframes animatedBackground{from{background-position:0 0}to{background-position:100% 0}}' + '</style>'
-			);
-		}
-		var $container = $(this),
-			$widget,
-			content = $container.text();
 
-		content.trim();
-		var html = '';
-		var images = content.split('}');
-		for (var i in images) {
+	function getBackground(row, eachrow) {
+		var background = '';
+		for (var i = 0; i < (row + 1) * (eachrow + 3); i++) {
 			var hexheader = '<div class="corner-1"></div><div class="corner-2"></div><div class="corner-3"></div>';
-			var tag = '';
-			if (images[i].trim().length <= 0)
-				continue;
-			var imgAttr = images[i] + '}',
+			var showurl = '',
+				displayClass = 'hex';
+			if (i % (eachrow + 3) == 0)
+				displayClass += " hex-gap", row;
+			tag = hexheader + '<div class="inner"></div>';
+			tag = '<div class="' + displayClass + '" style="background-image: url(' + showurl + ');">' + tag + '</div>';
+			background += tag;
+		}
+		background = '<div class="hex-background">' + background + '</div>';
+		return background;
+	}
+
+	function getHexContainer(html, row, eachrow, linkId) {
+		html = '<div class="hex-container">' + getBackground(row, eachrow) + html + '</div>';
+		html = '<li class="als-item" data-linkId="' + linkId + '">' + html + '</li>';
+		return html;
+	}
+
+	function getBackLink(linkId, text) {
+		var hexheader = '<div class="corner-1"></div><div class="corner-2"></div><div class="corner-3"></div>';
+		var html = '',
+			tag = '',
+			showurl = '',
+			displayClass = 'hex hex-back';
+		var tag = hexheader + '<div class="inner" data-linkBtn="' + linkId + '"><h4>' + text + '</h4><hr /></a></div>';
+		tag = '<div class="' + displayClass + '" data-original="' + showurl + '" style="background-image: url(' + ');">' + tag + '</div>';
+		html += tag;
+		return html;
+	}
+
+	function getAlsItem(images, options) {
+		var html = '',
+			alsview = '',
+			eachrow = options.eachrow,
+			row = 0,
+			index = 0,
+			imgCount = 0,
+			themePage = 0;
+		for (var i in images) {
+			var hexheader = '<div class="corner-1"></div><div class="corner-2"></div><div class="corner-3"></div>',
+				tag = '',
+				imgAttr = images[i],
 				showurl = '',
 				displayClass = 'hex';
-			imgAttr = JSON.parse(imgAttr);
+
 			if (imgAttr['title']) {
-				tag = hexheader + '<div class="inner">' + imgAttr['title'] + '</div>';
+				var linkBtn = options.themePage[index];
+				tag = hexheader + '<div class="inner" data-linkBtn="' + linkBtn + '">' + imgAttr['title'] + '</div>';
 				if (imgAttr['class'])
 					displayClass += " " + imgAttr['class'];
 			} else {
@@ -34,16 +62,102 @@ $(document).ready(function() {
 				tag = '<span class="hex-caption hex-simple-caption">' + tag + '</span> ';
 				tag = hexheader + '<div class="inner">' + tag + '</div>';
 			}
-			if (i % 7 == 0)
-				displayClass += " hex-gap";
 
-			tag = '<div class="' + displayClass + '" style="background-image: url(' + showurl + ');">' + tag + '</div>';
+			if (imgCount % (eachrow + 1) == 0) {
+				if (html.length > 0) {
+					options.alsPage++;
+					html += getBackLink(1, "NEXT");
+					html = getHexContainer(html, row, eachrow, -options.alsPage);
+					alsview += html;
+					imgCount = 0;
+					row = 0;
+					themePage++;
+				}
+				displayClass += " hex-gap";
+				html = '';
+				row++;
+			}
+			index++;
+			imgCount++;
+			displayClass += ' lazy';
+			tag = '<div class="' + displayClass + '" data-original="' + showurl + '" style="background-image: url(' + ');">' + tag + '</div>';
 			html += tag;
 		}
-		html = '<div class="hex-container">' + html + '</div>';
+		if (html.length > 0) {
+			options.alsPage++;
+			if (!options.head)
+				html += getBackLink(-options.alsPage, "THIS END");
+			html = getHexContainer(html, row, eachrow, -options.alsPage);
+			alsview += html;
+			themePage++;
+		}
+		options.themePage.push(themePage);
+		options.index++;
+		return alsview;
+	}
+	$("script[type='text/hex-gallery']").each(function(index, value) {
+		var $container = $(this),
+			$widget,
+			content = $container.text();
+		content = JSON.parse(content);
+		var data = {
+			alsPage: 0,
+			index: 1,
+			eachrow: 7,
+			themePage: [],
+			head: false
+		};
+		var album = [],
+			alsItem = '';
+		for (var i in content['album'])
+			album.push(content['album'][i]['cover']);
+		for (var i in content['album'])
+			alsItem += getAlsItem(content['album'][i]['photo'], data);
+		data.themePage.unshift(1);
+		for (var i = 0, sum = 0; i < data.themePage.length; i++) {
+			sum += data.themePage[i];
+			data.themePage[i] = sum;
+		}
+		data.head = true;
+		album = getAlsItem(album, data);
+		alsItem = album + alsItem;
+
+		var alsview = '<div class="als-viewport"><ul class="als-wrapper">' + alsItem + '</ul></div>',
+			left = '<span class="als-prev"><i class="icon-arrow-left" alt="prev" title="previous"></i></span>',
+			right = '<span class="als-next"><i class="icon-arrow-right" alt="next" title="next"></i></span>';
+		// var bullet = '<ul class="als-bullets"><li class="bullets-active">1</li><li>2</li><li>3</li><li>4</li></ul>';
+		html = '<div class="als-container">' + alsview + left + right + /* bullet +*/ '</div>';
 
 		$widget = $(html);
 
 		$container.after($widget);
+		
+		$("div.lazy").lazyload({});
+
+		$("img.lazy").lazyload({});
+
+		$(".als-container").als({
+			visible_items: 1,
+			scrolling_items: 1,
+			orientation: "horizontal",
+			circular: "no",
+			autoscroll: "no",
+			start_from: 0
+		});
+		$(".als-container").on('click', ".als-next", function() {
+			var timeout = setTimeout(function() {
+				$("div.lazy").lazyload({});
+			}, 2000);
+		});
+		$(".als-container").on('click', ".als-prev", function() {
+			var timeout = setTimeout(function() {
+				$("div.lazy").lazyload({});
+			}, 2000);
+		});
+		$(".als-container").on('click', "[data-linkBtn]", function() {
+			var timeout = setTimeout(function() {
+				$("div.lazy").lazyload({});
+			}, 2000);
+		});
 	});
 });
