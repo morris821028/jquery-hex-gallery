@@ -13,7 +13,7 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 	float: left;
-	font-family: Georgia,"Microsoft YaHei","Times New Roman",serif;
+	font-family: "Times New Roman","Open Sans Light","Georgia","Helvetica Neue","Helvetica","Microsoft YaHei","WenQuanYi Micro Hei","Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-weight: bold;
 	height: 86px;
 	margin: 25px 5px;
@@ -26,6 +26,7 @@
 	webkit-background-size: cover;
 	width: 150px;
 	zoom: 1;
+	text-shadow: -1px 1px 16px rgba(35, 193, 255, 0.7), 1px 1px 16px rgba(21, 163, 255, 0.7), 1px -1px 16px rgba(1, 96, 255, 0.7), -1px -1px 16px rgba(237, 112, 215, 0.7);
 }
 .hex.hex-gap
 {
@@ -124,13 +125,12 @@
 }
 .hex p
 {
-	font-size: 22px;
+	font-size: 28px;
 	margin: 0 auto;
-	width: 80%;
+	width: 90%;
 }
 .hex.hex-1
 {
-	background: #74cddb;
 }
 .hex.hex-2
 {
@@ -142,7 +142,7 @@
 }
 .hex.hex-back
 {
-	background: #80b971;
+	background: inherit;
 }
 .hex.hex-back a
 {
@@ -212,19 +212,21 @@
 }
 .hex-background
 {
-	left: -80px;
+	left: -120px;
 	position: absolute;
 	top: -136px;
 	width: 900px;
-	z-index: -1;
+}
+.hex-content {
+	left: -40px;
 }
 .hex-background .hex
 {
-	background-color: #708090;
+	background-color: rgb(40, 40, 40);
 }
 .als-viewport
 {
-	height: 390px;
+	height: 400px;
 	margin: 0 auto;
 	overflow: hidden;
 	position: relative;
@@ -261,8 +263,9 @@
 	padding: 15px 20px;
 	position: relative;
 	text-align: center;
-	width: 100%;
+	width: 840px;
 	z-index: 0;
+	margin: auto;
 }
 .als-container .als-item
 {
@@ -278,12 +281,12 @@
 .als-container .als-prev
 {
 	font-size: 30px;
-	left: 30px;
+	left: 10px;
 }
 .als-container .als-next
 {
 	font-size: 30px;
-	right: 30px;
+	right: 10px;
 }
 .als-container .als-prev,.als-container .als-next
 {
