@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	var hex_header = '<div class="corner-1"></div><div class="corner-2"></div><div class="corner-3"></div>';
+
 	function getBackground(row, eachrow) {
 		var background = '',
 			background_image = '';
@@ -30,59 +31,46 @@ $(document).ready(function() {
 	}
 
 	function getAlsItem(albumImages, options) {
-		var html = '',
-			alsview = '',
+		var alsview = '',
 			eachrow = options.eachrow,
-			pagerow = 0,
 			index = 0,
-			imgCount = 0,
 			themePage = 0;
-		for (var i in albumImages) {
-			var hex = '',
-				imgAttr = albumImages[i],
-				showurl = '',
-				displayClass = 'hex';
-
-			if (imgAttr['title']) {
-				var linkBtn = options.themePage[index],
-					title = imgAttr['title'];
-				hex = hex_header + '<div class="inner" data-linkBtn="' + linkBtn + '">' + title + '</div>';
-				if (imgAttr['class'])
-					displayClass += " " + imgAttr['class'];
-			} else {
-				for (var attr in imgAttr) {
-					hex += '<p><a href="' + imgAttr[attr] + '" class="hex-hover"><i class="icon-download"></i>' + attr + '</a></p>';
-					showurl = imgAttr[attr];
+		var chunk = eachrow + 1;
+		for (var st = 0, ed = albumImages.length; st < ed; st += chunk) {
+			var pageImages = albumImages.slice(st, st + chunk),
+				html = '',
+				pagerow = 2;
+			for (var i in pageImages) {
+				var hex = '',
+					imgAttr = pageImages[i],
+					showurl = '',
+					displayClass = 'hex';
+				if (html.length == 0)
+					displayClass += ' hex-gap';
+				if (imgAttr['title']) {
+					var linkBtn = options.themePage[index],
+						title = imgAttr['title'];
+					hex = hex_header + '<div class="inner" data-linkBtn="' + linkBtn + '">' + title + '</div>';
+					if (imgAttr['class'])
+						displayClass += " " + imgAttr['class'];
+				} else {
+					for (var attr in imgAttr) {
+						hex += '<p><a href="' + imgAttr[attr] + '" class="hex-hover"><i class="icon-download"></i>' + attr + '</a></p>';
+						showurl = imgAttr[attr];
+					}
+					hex = '<span class="hex-caption hex-simple-caption">' + hex + '</span> ';
+					hex = hex_header + '<div class="inner">' + hex + '</div>';
 				}
-				hex = '<span class="hex-caption hex-simple-caption">' + hex + '</span> ';
-				hex = hex_header + '<div class="inner">' + hex + '</div>';
+				index++;
+				displayClass += ' lazy';
+				hex = '<div class="' + displayClass + '" data-original="' + showurl + '" style="background-image: url(' + ');">' + hex + '</div>';
+				html += hex;
 			}
 
-			var isAnotherPage = imgCount % (eachrow + 1) == 0;
-
-			if (isAnotherPage) {
-				if (html.length > 0) {
-					options.alsPage++;
-					html += getBackHex(1, "NEXT");
-					html = getHexContainer(html, pagerow, eachrow, -options.alsPage);
-					alsview += html;
-					imgCount = 0;
-					pagerow = 0;
-					themePage++;
-				}
-				displayClass += " hex-gap";
-				html = '';
-				pagerow++;
-			}
-			index++;
-			imgCount++;
-			displayClass += ' lazy';
-			hex = '<div class="' + displayClass + '" data-original="' + showurl + '" style="background-image: url(' + ');">' + hex + '</div>';
-			html += hex;
-		}
-		if (html.length > 0) {
 			options.alsPage++;
-			if (!options.head)
+			if (st + chunk + 1 < ed)
+				html += getBackHex(1, "NEXT");
+			else
 				html += getBackHex(-options.alsPage, "THIS END");
 			html = getHexContainer(html, pagerow, eachrow, -options.alsPage);
 			alsview += html;
