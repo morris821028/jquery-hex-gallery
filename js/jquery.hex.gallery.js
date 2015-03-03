@@ -1,15 +1,30 @@
 $(document).ready(function() {
+
 	var hex_header = '<div class="corner-1"></div><div class="corner-2"></div><div class="corner-3"></div>';
+
+	function getHexHtml(displayClass, background_image, text, showurl, linkId) {
+		background_image = background_image || '';
+		linkId = typeof linkId !== 'undefined' ? ' data-linkBtn="' + linkId + '"' : ' ';
+		text = typeof text !== 'undefined' ? text : '';
+		showurl = typeof showurl !== 'undefined' ? '" data-original="' + showurl + '"' : ' ';
+
+		var hex_header = '<div class="corner-1"></div><div class="corner-2"></div><div class="corner-3"></div>';
+		hex = hex_header + '<div class="inner"' + linkId + '><h4>' + text + '</h4></a></div>';
+		hex = '<div class="' + displayClass + '"' + showurl + ' style="background-image: url(' + ');">' + hex + '</div>';
+		return hex;
+	}
+
+	function getBackHex(linkId, text) {
+		var displayClass = 'hex hex-back hex-content';
+		return getHexHtml(displayClass, '', text, '', linkId);
+	}
 
 	function getBackground(row, eachrow) {
 		var background = '',
 			background_image = '';
 		for (var i = 0; i < (row + 1) * (eachrow + 3); i++) {
-			var displayClass = i % (eachrow + 3) ? 'hex' : 'hex hex-gap',
-				hex = '';
-			hex = hex_header + '<div class="inner"></div>';
-			hex = '<div class="' + displayClass + '" style="background-image: url(' + background_image + ');">' + hex + '</div>';
-			background += hex;
+			var displayClass = i % (eachrow + 3) ? 'hex' : 'hex hex-gap';
+			background += getHexHtml(displayClass, background_image);
 		}
 		background = '<div class="hex-background">' + background + '</div>';
 		return background;
@@ -21,16 +36,7 @@ $(document).ready(function() {
 		return html;
 	}
 
-	function getBackHex(linkId, text) {
-		var showurl = '',
-			displayClass = 'hex hex-back',
-			hex = '';
-		hex = hex_header + '<div class="inner" data-linkBtn="' + linkId + '"><h4>' + text + '</h4><hr /></a></div>';
-		hex = '<div class="' + displayClass + '" data-original="' + showurl + '" style="background-image: url(' + ');">' + hex + '</div>';
-		return hex;
-	}
-
-	function getAlsItem(albumImages, options) {
+	function getAlsItem(albumImages, options, isCover) {
 		var alsview = '',
 			eachrow = options.eachrow,
 			index = 0,
@@ -41,37 +47,34 @@ $(document).ready(function() {
 				html = '',
 				pagerow = 2;
 			for (var i in pageImages) {
-				var hex = '',
-					imgAttr = pageImages[i],
+				var	imgAttr = pageImages[i],
 					showurl = '',
-					displayClass = 'hex';
-				if (html.length == 0)
-					displayClass += ' hex-gap';
+					displayClass = html.length == 0 ? 'hex lazy hex-gap hex-content': 'hex lazy hex-content',
+					text = '',
+					linkId = undefined;
+
 				if (imgAttr['title']) {
-					var linkBtn = options.themePage[index],
-						title = imgAttr['title'];
-					hex = hex_header + '<div class="inner" data-linkBtn="' + linkBtn + '">' + title + '</div>';
+					text = imgAttr['title'];
+					linkId = options.themePage[index];
+					showurl = imgAttr['img'];
 					if (imgAttr['class'])
 						displayClass += " " + imgAttr['class'];
 				} else {
 					for (var attr in imgAttr) {
-						hex += '<p><a href="' + imgAttr[attr] + '" class="hex-hover"><i class="icon-download"></i>' + attr + '</a></p>';
+						text += '<p><a href="' + imgAttr[attr] + '" class="hex-hover"><i class="icon-download"></i>' + attr + '</a></p>';
 						showurl = imgAttr[attr];
 					}
-					hex = '<span class="hex-caption hex-simple-caption">' + hex + '</span> ';
-					hex = hex_header + '<div class="inner">' + hex + '</div>';
+					text = '<span class="hex-caption hex-simple-caption">' + text + '</span> ';
 				}
 				index++;
-				displayClass += ' lazy';
-				hex = '<div class="' + displayClass + '" data-original="' + showurl + '" style="background-image: url(' + ');">' + hex + '</div>';
-				html += hex;
+				html += getHexHtml(displayClass, '', text, showurl, linkId);
 			}
 
 			options.alsPage++;
 			if (st + chunk + 1 < ed)
-				html += getBackHex(1, "NEXT");
-			else
-				html += getBackHex(-options.alsPage, "THIS END");
+				html += getBackHex(1, '<p>Next <i class="icon-forward"></i></p>');
+			else if (!isCover || (isCover && themePage > 1))
+				html += getBackHex(-options.alsPage, '<p><i class="icon-reply"></i>Back</p>');
 			html = getHexContainer(html, pagerow, eachrow, -options.alsPage);
 			alsview += html;
 			themePage++;
@@ -100,15 +103,14 @@ $(document).ready(function() {
 		for (var i in content['album'])
 			album.push(content['album'][i]['cover']);
 		for (var i in content['album'])
-			alsItem += getAlsItem(content['album'][i]['photo'], _config);
+			alsItem += getAlsItem(content['album'][i]['photo'], _config, false);
 		_config.themePage.unshift(1);
 		for (var i = 0, sum = 0; i < _config.themePage.length; i++) {
 			sum += _config.themePage[i];
 			_config.themePage[i] = sum;
 		}
 		_config.head = true;
-		album = getAlsItem(album, _config);
-		alsItem = album + alsItem;
+		alsItem = getAlsItem(album, _config, true) + alsItem;
 
 		var alsview = '<div class="als-viewport"><ul class="als-wrapper">' + alsItem + '</ul></div>',
 			left = '<span class="als-prev"><i class="icon-arrow-left" alt="prev" title="previous"></i></span>',
