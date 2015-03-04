@@ -30,25 +30,36 @@ in header
 {
   "album" : [
       {
-        "cover": {"title": "<h4>THEME</h4><hr /><p>Stephanie Dola</p>", "class": "hex-1"},
+        "cover": {"title": "<p>Stephanie Dola</p>", "class": "hex-1", "img" : "http://i.imgur.com/xaykK2s.jpg"},
         "photo": [
           {"imgur": "http://i.imgur.com/yIoACHc.gif"},
-          {"imgur": "http://i.imgur.com/uINck6K.gif"}
+          {"imgur": "http://i.imgur.com/uINck6K.gif"},
+          {"imgur": "http://i.imgur.com/zOZJEex.gif"}
         ]
       },
       {
-        "cover": {"title": "<h4>THEME</h4><hr /><p>萌～萌～哒～</p>", "class": "hex-2"},
+        "cover": {"title": "<p>Moe Moe</p>", "class": "hex-1", "img": "http://i.imgur.com/SOjLn66.jpg"},
         "photo": [
           {"imgur": "http://i.imgur.com/YSmWA3g.gif"},
           {"imgur": "http://i.imgur.com/6G4BDxU.gif"},
-          {"imgur": "http://i.imgur.com/kuH4XVL.gif"}
+          {"imgur": "http://i.imgur.com/kuH4XVL.gif"},
+          {"imgur": "http://i.imgur.com/0NemOhQ.gif"},
+          {"imgur": "http://i.imgur.com/tedXr7Y.gif"},
+          {"imgur": "http://i.imgur.com/5IHR8bQ.gif"}
         ]
       },
       {
-        "cover": {"title": "<h4>THEME</h4><hr /><p>其他</p>", "class": "hex-3"},
+        "cover": {"title": "<p>Chiyo Gekkan</p>", "class": "hex-1", "img": "http://i.imgur.com/FbZZuQC.png"},
         "photo": [
-          {"imgur": "http://i.imgur.com/vpKzynV.gif"},
-          {"imgur": "http://i.imgur.com/J2Dllne.gif"}
+          {"imgur": "http://i.imgur.com/dCw8LFb.gif"},
+          {"imgur": "http://i.imgur.com/ZtHGJYd.gif"},
+          {"imgur": "http://i.imgur.com/4eZyFHp.gif"}
+        ]
+      },
+      {
+        "cover": {"title": "<p>Other</p>", "class": "hex-1", "img": "http://i.imgur.com/FbZZuQC.png"},
+        "photo": [
+          {"imgur": "http://i.imgur.com/vpKzynV.gif"}
         ]
       }
   ]
